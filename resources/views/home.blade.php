@@ -8,18 +8,54 @@
 
         <div class="col-md-8">
 
-            <div class="card">
-                <div class="card-header">Dashboard</div>
+            <div class="card mb-4">
+
+                <div class="card-header">Accounts</div>
 
                 <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
+
+                    @if( $accounts )
+
+                        <table class="table">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th scope="col">ID</th>
+
+                                    <th scope="col">Name</th>
+
+                                    <th scrope="col">Balance</th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+
+                                @foreach( $accounts as $account )
+
+                                    <tr>
+
+                                        <th scope="row">{{ $account->id }}</th>
+
+                                        <td>{{ $account->name }}</td>
+
+                                        <td>{{ $account->balance }}</td>
+
+                                    </tr>
+
+                                @endforeach
+
+                            </tbody>
+
+                        </table>
+
                     @endif
 
-                    You are logged in!
                 </div>
+
             </div>
 
             <div class="card">
@@ -30,18 +66,6 @@
                         <p>{{ $budget->created_at }}</p>
                     @empty
                         <p>You have no budgets</p>
-                    @endforelse
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-header">Accounts</div>
-
-                <div class="card-body">
-                    @forelse( $accounts as $account )
-                        <p>{{ $account->name }}</p>
-                    @empty
-                        <p>You have no accounts</p>
                     @endforelse
                 </div>
             </div>
