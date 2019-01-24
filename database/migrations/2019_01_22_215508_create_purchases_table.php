@@ -15,6 +15,8 @@ class CreatePurchasesTable extends Migration
     {
         Schema::create('purchases', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('budget_id');
+            $table->type('choices', ['purchase', 'transfer']);
             $table->string('name');
             $table->decimal('amount', 8, 2);
             $table->timestamps();
