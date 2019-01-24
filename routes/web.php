@@ -21,8 +21,19 @@ Route::get('/', 'HomeController@index')->name('home');
 |--------------------------------------------------------------------------
 */
 Route::get('budgets', 'BudgetController@index');
-Route::get('budgets/create', 'BudgetController@create');
+Route::get('budgets/create', 'BudgetController@store');
 Route::get('budgets/{name}', 'BudgetController@show');
-Route::post('budgets', 'BudgetController@store');
 Route::patch('budgets/{name}', 'BudgetController@update');
 Route::delete('budgets/{name}', 'BudgetController@destroy');
+
+/*
+|--------------------------------------------------------------------------
+| Account Routes
+|--------------------------------------------------------------------------
+*/
+Route::get('accounts', 'AccountController@index');
+Route::get('accounts/create', 'AccountController@create');
+Route::get('accounts/{name}', 'AccountController@show');
+Route::post('accounts', 'AccountController@store');
+Route::patch('accounts/{name}', 'BudgetController@update');
+Route::delete('accounts/{name}', 'BudgetController@destroy');

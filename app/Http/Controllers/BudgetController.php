@@ -19,28 +19,17 @@ class BudgetController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Store a newly created resource in storage.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function store()
     {
         $budget = new Budget();
         $budget->user_id = Auth::id();
         $budget->save();
 
         return redirect('/')->with('status', 'New budget created');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
     }
 
     /**
