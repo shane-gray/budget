@@ -27,4 +27,22 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * Get a list of budgets for the user
+     * 
+     */
+    public function budgets()
+    { 
+        return $this->hasMany('App\Budget');
+    }
+
+    /**
+     * Get a list of accounts for the user
+     * 
+     */
+    public function accounts()
+    {
+        return $this->hasMany('App\Account');
+    }
 }

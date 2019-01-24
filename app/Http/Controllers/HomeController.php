@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Budget;
 use App\Account;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -25,8 +26,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $budgets = Budget::All();
-        $accounts = Account::All();
+        $budgets = Auth::user()->budgets;
+        $accounts = Auth::user()->accounts;
 
         return view('home', compact('budgets', 'accounts'));
     }
