@@ -26,7 +26,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $budgets = Auth::user()->budgets;
+        $budgets = Auth::user()->budgets()->orderBy('created_at', 'desc')->get();
         $accounts = Auth::user()->accounts;
 
         return view('home', compact('budgets', 'accounts'));

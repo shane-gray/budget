@@ -8,6 +8,10 @@
 
         <div class="col-md-8">
 
+            @if( session('status') )
+                <div class="alert alert-success" role="alert">{{ session('status') }}</div>
+            @endif
+
             <div class="card mb-4">
 
                 <div class="card-header">Accounts</div>
@@ -54,6 +58,8 @@
 
                     @endif
 
+                    <a href="/accounts/create" class="btn btn-primary btn-primary float-right"><span class="oi oi-plus"></span> New account</a>
+
                 </div>
 
             </div>
@@ -67,6 +73,7 @@
                     @empty
                         <p>You have no budgets</p>
                     @endforelse
+                    <a href="/budgets/create" class="btn btn-primary btn-primary float-right"><span class="oi oi-plus"></span> New budget</a>
                 </div>
             </div>
 

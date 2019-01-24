@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Budget;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BudgetController extends Controller
 {
@@ -24,7 +25,11 @@ class BudgetController extends Controller
      */
     public function create()
     {
-        //
+        $budget = new Budget();
+        $budget->user_id = Auth::id();
+        $budget->save();
+
+        return redirect('/')->with('status', 'New budget created');
     }
 
     /**
