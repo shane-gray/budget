@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Budget;
+use App\Account;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +25,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $budgets = Budget::All();
+        $accounts = Account::All();
+
+        return view('home', compact('budgets', 'accounts'));
     }
 }
