@@ -29,7 +29,7 @@ class BudgetController extends Controller
         $budget->user_id = Auth::id();
         $budget->save();
 
-        return redirect('/')->with('status', 'New budget created');
+        return redirect('/budgets/' . $budget->id)->with('status', 'New budget created');
     }
 
     /**
@@ -40,7 +40,7 @@ class BudgetController extends Controller
      */
     public function show(Budget $budget)
     {
-        //
+        return view('budgets.show', compact('budget'));
     }
 
     /**
