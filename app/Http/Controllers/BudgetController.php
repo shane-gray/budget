@@ -40,7 +40,8 @@ class BudgetController extends Controller
      */
     public function show(Budget $budget)
     {
-        return view('budgets.show', compact('budget'));
+        $accounts = Auth::user()->accounts;
+        return view('budgets.show', compact('budget', 'accounts'));
     }
 
     /**
