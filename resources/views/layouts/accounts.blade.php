@@ -4,7 +4,7 @@
 
     <div class="card-body">
 
-        @if( $accounts )
+        @if( $accounts->isNotEmpty() )
 
             <table class="table">
 
@@ -41,6 +41,10 @@
                 </tbody>
 
             </table>
+
+        @else
+
+            <p>You have no accounts</p>
 
         @endif
 

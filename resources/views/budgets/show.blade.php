@@ -32,100 +32,45 @@
                 <div class="card-header">Purchases</div>
 
                 <div class="card-body">
-                    <table class="table">
-                        <tr>
-                            <td>Lorem ipsum</td>
-                            <td>Lorem ipsum</td>
-                        </tr>
-                        <tr>
-                            <td>Lorem ipsum</td>
-                            <td>Lorem ipsum</td>
-                        </tr>
-                        <tr>
-                            <td>Lorem ipsum</td>
-                            <td>Lorem ipsum</td>
-                        </tr>
-                        <tr>
-                            <td>Lorem ipsum</td>
-                            <td>Lorem ipsum</td>
-                        </tr>
-                        <tr>
-                            <td>Lorem ipsum</td>
-                            <td>Lorem ipsum</td>
-                        </tr>
-                        <tr>
-                            <td>Lorem ipsum</td>
-                            <td>Lorem ipsum</td>
-                        </tr>
-                        <tr>
-                            <td>Lorem ipsum</td>
-                            <td>Lorem ipsum</td>
-                        </tr>
-                        <tr>
-                            <td>Lorem ipsum</td>
-                            <td>Lorem ipsum</td>
-                        </tr>
-                        <tr>
-                            <td>Lorem ipsum</td>
-                            <td>Lorem ipsum</td>
-                        </tr>
-                        <tr>
-                            <td>Lorem ipsum</td>
-                            <td>Lorem ipsum</td>
-                        </tr>
-                        <tr>
-                            <td>Lorem ipsum</td>
-                            <td>Lorem ipsum</td>
-                        </tr>
-                        <tr>
-                            <td>Lorem ipsum</td>
-                            <td>Lorem ipsum</td>
-                        </tr>
-                        <tr>
-                            <td>Lorem ipsum</td>
-                            <td>Lorem ipsum</td>
-                        </tr>
-                        <tr>
-                            <td>Lorem ipsum</td>
-                            <td>Lorem ipsum</td>
-                        </tr>
-                        <tr>
-                            <td>Lorem ipsum</td>
-                            <td>Lorem ipsum</td>
-                        </tr>
-                        <tr>
-                            <td>Lorem ipsum</td>
-                            <td>Lorem ipsum</td>
-                        </tr>
-                        <tr>
-                            <td>Lorem ipsum</td>
-                            <td>Lorem ipsum</td>
-                        </tr>
-                        <tr>
-                            <td>Lorem ipsum</td>
-                            <td>Lorem ipsum</td>
-                        </tr>
-                        <tr>
-                            <td>Lorem ipsum</td>
-                            <td>Lorem ipsum</td>
-                        </tr>
-                        <tr>
-                            <td>Lorem ipsum</td>
-                            <td>Lorem ipsum</td>
-                        </tr>
-                        <tr>
-                            <td>Lorem ipsum</td>
-                            <td>Lorem ipsum</td>
-                        </tr>
-                        <tr>
-                            <td>Lorem ipsum</td>
-                            <td>Lorem ipsum</td>
-                        </tr>
-                        <tr>
-                            <td>Lorem ipsum</td>
-                            <td>Lorem ipsum</td>
-                        </tr>
-                    </table>
+
+                    @if( $purchases->isNotEmpty() )
+
+                        <table class="table">
+
+                            <thead>
+
+                                <th>Name</th>
+
+                                <th>Amount</th>
+
+                            </thead>
+
+                            <tbody>
+                                
+                                @foreach( $purchases as $purchase )
+
+                                    <tr>
+
+                                        <td>{{ $purchase->name }}</td>
+
+                                        <td>${{ $purchase->amount }}</td>
+
+                                    </tr>
+
+                                @endforeach
+
+                            </tbody>
+
+                        </table>
+
+                    @else
+
+                        <p>You have no purchases</p>
+
+                    @endif
+
+                    <a id="new-purchase" href="/purchases/create" class="btn btn-primary btn-primary float-right"><span class="oi oi-plus"></span> New purchase</a>
+
                 </div>
 
             </div>

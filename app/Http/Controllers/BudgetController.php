@@ -8,6 +8,17 @@ use Illuminate\Support\Facades\Auth;
 
 class BudgetController extends Controller
 {
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +26,7 @@ class BudgetController extends Controller
      */
     public function index()
     {
-        //
+        
     }
 
     /**
@@ -41,7 +52,9 @@ class BudgetController extends Controller
     public function show(Budget $budget)
     {
         $accounts = Auth::user()->accounts;
-        return view('budgets.show', compact('budget', 'accounts'));
+        $purchases = $budget->purchases;
+
+        return view('budgets.show', compact('budget', 'accounts', 'purchases'));
     }
 
     /**
