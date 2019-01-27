@@ -35,7 +35,15 @@ class PurchaseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'budget_id' => 'required|integer',
+            'name' => 'required',
+            'amount' => 'required|numeric'
+        ]);
+        
+        $purchase = Purchase::create($data);
+
+        return response($purchase, 201);
     }
 
     /**

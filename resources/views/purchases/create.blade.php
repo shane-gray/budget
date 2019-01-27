@@ -1,4 +1,8 @@
-<form>
+<form action="/purchases" method="post">
+
+    @csrf
+
+    <input type="hidden" name="budget_id" value="{{ $budget->id }}" />
 
     <div class="form-row">
 

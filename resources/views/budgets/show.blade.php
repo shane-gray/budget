@@ -98,7 +98,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary">Save purchase</button>
+                <button type="button" class="btn btn-primary js-submit">Save purchase</button>
             </div>
         </div>
     </div>

@@ -37,3 +37,10 @@ Route::get('accounts/{account}', 'AccountController@show');
 Route::post('accounts', 'AccountController@store');
 Route::patch('accounts/{account}', 'BudgetController@update');
 Route::delete('accounts/{account}', 'BudgetController@destroy');
+
+/*
+|--------------------------------------------------------------------------
+| Purchase Routes
+|--------------------------------------------------------------------------
+*/
+Route::post('purchases', 'PurchaseController@store');

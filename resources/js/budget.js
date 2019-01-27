@@ -13,3 +13,36 @@ $('[name="amount"]').on('change', function() {
 $('#new-purchase-modal').on('hidden.bs.modal', function() {
     $(this).find('input').val('');
 });
+
+/**
+ * Submit form with footer button
+ * 
+ */
+$('#new-purchase-modal .js-submit').on('click', function() {
+    $(this).parents('.modal').find('form').submit();
+});
+
+/**
+ * Send ajax request for new purchase
+ * 
+ */
+$('#new-purchase-modal form').submit(function(e) {
+    e.preventDefault();
+
+    var $modal = $(this).parents('.modal');
+
+    $.ajax({
+        url: '/purchases',
+        type: 'POST',
+        dataType: 'json',
+        data: $(this).serialize(),
+        success: function(response) {
+            console.log(response);
+        },
+        error: function(data) {
+            response = data.responseJSON;
+            $modal.find('.alert').remove();
+            $('.modal-body', $modal).prepend('<div class="alert alert-danger alert-dismissable fade show"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' + response.message + '</div>');
+        }
+    });
+});
