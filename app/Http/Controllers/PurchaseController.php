@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Purchase;
+use App\Budget;
 use Illuminate\Http\Request;
 
 class PurchaseController extends Controller
@@ -40,6 +41,9 @@ class PurchaseController extends Controller
             'name' => 'required',
             'amount' => 'required|numeric'
         ]);
+
+        $budget = Budget::find($data['budget_id']);
+        $this->authorize('update', $budget);
         
         $purchase = Purchase::create($data);
 
