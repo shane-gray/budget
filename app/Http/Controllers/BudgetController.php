@@ -51,6 +51,8 @@ class BudgetController extends Controller
      */
     public function show(Budget $budget)
     {
+        $this->authorize('update', $budget);
+        
         $accounts = Auth::user()->accounts;
         $purchases = $budget->purchases;
 
