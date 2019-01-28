@@ -36467,9 +36467,17 @@ if (token) {
 /***/ (function(module, exports) {
 
 /**
+ * Display destination account for transfers
+ * 
+ */
+$('#type').on('change', function () {
+  if ($(this).find('option:selected').val() == 'transfer') $('.destination').removeClass('invisible');else $('.destination').addClass('invisible');
+});
+/**
  * Allow two decimals form amount field
  * 
  */
+
 $('[name="amount"]').on('change', function () {
   $(this).val(parseFloat($(this).val()).toFixed(2));
 });

@@ -1,4 +1,15 @@
 /**
+ * Display destination account for transfers
+ * 
+ */
+$('#type').on('change', function() {
+    if( $(this).find('option:selected').val() == 'transfer' )
+        $('.destination').removeClass('invisible');
+    else
+        $('.destination').addClass('invisible');
+});
+
+/**
  * Allow two decimals form amount field
  * 
  */
