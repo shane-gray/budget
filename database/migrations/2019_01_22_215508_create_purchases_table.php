@@ -16,7 +16,7 @@ class CreatePurchasesTable extends Migration
         Schema::create('purchases', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('budget_id');
-            $table->enum('type', ['purchase', 'transfer']);
+            $table->enum('type', ['purchase', 'transfer', 'bill']);
             $table->string('name');
             $table->decimal('amount', 8, 2);
             $table->integer('from_account');
