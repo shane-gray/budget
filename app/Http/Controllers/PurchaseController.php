@@ -38,6 +38,9 @@ class PurchaseController extends Controller
     {
         $data = $request->validate([
             'budget_id' => 'required|integer',
+            'type' => 'required',
+            'from_account' => 'required|exists:accounts,id',
+            'to_account' => 'requiredif:type,transfer',
             'name' => 'required',
             'amount' => 'required|numeric'
         ]);

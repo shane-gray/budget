@@ -56,7 +56,7 @@ class BudgetController extends Controller
         $accounts = Auth::user()->accounts;
         $purchases = $budget->purchases;
 
-        return view('budgets.show', compact('budget', 'accounts', 'purchases'));
+        return view('budgets.show', compact('budget', 'accounts', 'purchases', 'account_purchases'));
     }
 
     /**

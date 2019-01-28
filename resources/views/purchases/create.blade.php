@@ -38,8 +38,8 @@
         <div class="col-sm-6 destination invisible">
 
             <div class="form-group">
-                <label for="from_account">Destination</label>
-                <select id="from_account" name="from_account" class="form-control" required>
+                <label for="to_account">Destination</label>
+                <select id="to_account" name="to_account" class="form-control" required>
                     @foreach( $accounts as $account )
                         <option value="{{ $account->id }}">{{ $account->name }}</option>
                     @endforeach

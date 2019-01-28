@@ -24,4 +24,14 @@ class Purchase extends Model
         return $this->belongsTo('App\Budget');
     }
 
+    /**
+     * Get the account this purchase is assigned
+     * to.
+     * 
+     */
+    public function account()
+    {
+        return $this->belongsTo('App\Account', 'from_account');
+    }
+
 }
