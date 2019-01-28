@@ -36487,7 +36487,8 @@ $('[name="amount"]').on('change', function () {
  */
 
 $('#new-purchase-modal').on('hidden.bs.modal', function () {
-  $(this).find('input').val('');
+  $(this).find('form').trigger('reset');
+  $('.destination').addClass('invisible');
 });
 /**
  * Submit form with footer button
