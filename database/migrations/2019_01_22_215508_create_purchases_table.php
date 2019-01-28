@@ -19,6 +19,8 @@ class CreatePurchasesTable extends Migration
             $table->enum('type', ['purchase', 'transfer']);
             $table->string('name');
             $table->decimal('amount', 8, 2);
+            $table->integer('from_account');
+            $table->integer('to_account')->nullable();
             $table->timestamps();
         });
     }

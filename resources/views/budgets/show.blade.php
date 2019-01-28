@@ -69,7 +69,7 @@
 
                     @endif
 
-                    <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#new-purchase-modal">
+                    <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#new-purchase-modal" {{ $accounts->isEmpty() ? 'disabled' : '' }}>
                         <span class="oi oi-plus"></span> New purchase
                     </button>
 
