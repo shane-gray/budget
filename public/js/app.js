@@ -36511,8 +36511,12 @@ $('#new-purchase-modal form').submit(function (e) {
     type: 'POST',
     dataType: 'json',
     data: $(this).serialize(),
-    success: function success(response) {
-      console.log(response);
+    success: function success(data) {
+      response = data.responseJSON;
+      $modal.find('.alert').remove();
+      $modal.find('form').trigger('reset');
+      $modal.find('.destination').addClass('invisible');
+      $('.modal-body', $modal).prepend('<div class="alert alert-success alert-dismissable fade show"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>New purchase added</div>');
     },
     error: function error(data) {
       response = data.responseJSON;

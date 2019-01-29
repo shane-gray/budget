@@ -83,12 +83,6 @@
 
 </div>
 
-<ul>
-    @foreach( $account_purchases as $purchase )
-        <li>{{ $purchase->name }}</li>
-    @endforeach
-</ul>
-
 <!-- New purchase modal -->
 <div id="new-purchase-modal" class="modal fade">
     <div class="modal-dialog modal-dialog-centered">

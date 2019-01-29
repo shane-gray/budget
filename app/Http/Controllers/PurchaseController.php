@@ -48,6 +48,9 @@ class PurchaseController extends Controller
         $budget = Budget::find($data['budget_id']);
         $this->authorize('update', $budget);
         
+        if( $data['type'] != 'transfer' )
+            $data['to_account'] = null;
+            
         $purchase = Purchase::create($data);
 
         return response($purchase, 201);
