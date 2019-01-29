@@ -42,8 +42,25 @@ class LoginController extends Controller
 
         if( $budget ) {
             return '/budgets/' . $budget->id;
+        } else {
+            dd($budget);
+            return '/';
         }
+    }
 
-        return '/';
+    /**
+     * The user has been authenticated.
+     *
+     */
+    protected function authenticated()
+    {
+        $budget = Auth::user()->budgets()->orderBy('created_at', 'desc')->first();
+
+        if( $budget ) {
+            return redirect('/budgets/' . $budget->id);
+        } else {
+            dd($budget);
+            return redirect('/');
+        }
     }
 }
