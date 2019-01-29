@@ -20,14 +20,31 @@
             @include('layouts.accounts')
 
             <div class="card">
+
                 <div class="card-header">Budgets</div>
 
                 <div class="card-body">
-                    @forelse( $budgets as $budget )
-                        <p>{{ $budget->created_at }}</p>
-                    @empty
+
+                    @if( $budgets->isNotEmpty() )
+
+                        <ul class="list-group">
+
+                            @foreach( $budgets as $budget )
+
+                                <li class="list-group-item">
+
+                                    <a href="/budgets/{{ $budget->id }}">{{ $budget->created_at->format('M d Y') }}</a>
+
+                                </li>
+
+                            @endforeach
+
+                        </ul>
+
+                    @else
                         <p>You have no budgets</p>
-                    @endforelse
+                    @endif
+
                     <a href="/budgets/create" class="btn btn-primary btn-primary float-right"><span class="oi oi-plus"></span> New budget</a>
                 </div>
             </div>
