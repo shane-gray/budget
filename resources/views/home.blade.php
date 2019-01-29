@@ -27,7 +27,7 @@
 
                     @if( $budgets->isNotEmpty() )
 
-                        <ul class="list-group">
+                        <ul class="list-group mb-4">
 
                             @foreach( $budgets as $budget )
 
