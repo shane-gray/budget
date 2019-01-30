@@ -36471,7 +36471,9 @@ if (token) {
  * 
  */
 $('#type').on('change', function () {
-  if ($(this).find('option:selected').val() == 'transfer') $('.destination').removeClass('invisible');else $('.destination').addClass('invisible');
+  var type = $(this).find('option:selected').val();
+  $('.destination, .bill').addClass('d-none');
+  if (type == 'transfer') $('.destination').removeClass('d-none');else if (type == 'bill') $('.bill').removeClass('d-none');
 });
 /**
  * Allow two decimals form amount field
@@ -36488,7 +36490,7 @@ $('[name="amount"]').on('change', function () {
 
 $('#new-purchase-modal').on('hidden.bs.modal', function () {
   $(this).find('form').trigger('reset');
-  $('.destination').addClass('invisible');
+  $('.destination, .bill').addClass('d-none');
 });
 /**
  * Submit form with footer button
@@ -36496,6 +36498,7 @@ $('#new-purchase-modal').on('hidden.bs.modal', function () {
  */
 
 $('#new-purchase-modal .js-submit').on('click', function () {
+  $(this).parents('.modal').find('.alert').remove();
   $(this).parents('.modal').find('form').submit();
 });
 /**

@@ -12,6 +12,7 @@
                 <label for="type">Type</label>
                 <select id="type" name="type" class="form-control" required>
                     <option value="purchase">Purchase</option>
+                    <option value="bill">Bill</option>
                     <option value="transfer">Transfer</option>
                 </select>
             </div>
@@ -35,13 +36,26 @@
 
         </div>
 
-        <div class="col-sm-6 destination invisible">
+        <div class="col-sm-6 destination d-none">
 
             <div class="form-group">
                 <label for="to_account">Destination</label>
                 <select id="to_account" name="to_account" class="form-control" required>
                     @foreach( $accounts as $account )
                         <option value="{{ $account->id }}">{{ $account->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+        </div>
+
+        <div class="col-sm-6 bill d-none">
+
+            <div class="form-group">
+                <label for="bill_id">Bill</label>
+                <select id="bill_id" name="bill_id" class="form-control" required>
+                    @foreach( $bills as $bill )
+                        <option value="{{ $bill->id }}">{{ $bill->name }}</option>
                     @endforeach
                 </select>
             </div>

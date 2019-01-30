@@ -38,10 +38,10 @@ class PurchaseController extends Controller
     {
         $data = $request->validate([
             'budget_id' => 'required|exists:budgets,id|integer',
-            'bill_id' => 'requiredif:type,bill|exists:bills,id|integer',
+            'bill_id' => 'required_if:type,bill|exists:bills,id|integer',
             'type' => 'required',
             'from_account' => 'required|exists:accounts,id|integer',
-            'to_account' => 'requiredif:type,transfer|exists:accounts,id|integer',
+            'to_account' => 'required_if:type,transfer|exists:accounts,id|integer',
             'name' => 'required',
             'amount' => 'required|numeric'
         ]);
