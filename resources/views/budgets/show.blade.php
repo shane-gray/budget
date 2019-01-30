@@ -48,7 +48,7 @@
 
                                         <td>{{ $bill->name }}</td>
 
-                                        <td>{{ $bill->amount }}</td>
+                                        <td>${{ $bill->amount ?: '0.00' }}</td>
 
                                     </tr>
 

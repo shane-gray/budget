@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Purchase;
 use App\Budget;
+use App\Account;
+use App\Bill;
 use Illuminate\Http\Request;
 
 class PurchaseController extends Controller
@@ -36,6 +38,7 @@ class PurchaseController extends Controller
      */
     public function store(Request $request)
     {
+        // Data validation
         $data = $request->validate([
             'budget_id' => 'required|exists:budgets,id|integer',
             'bill_id' => 'required_if:type,bill|exists:bills,id|integer',
@@ -46,14 +49,21 @@ class PurchaseController extends Controller
             'amount' => 'required|numeric'
         ]);
 
-        $budget = Budget::find($data['budget_id']);
-        $this->authorize('update', $budget);
+        // Authorizations
+        $this->authorize('update', Budget::find($data['budget_id']));
+        $this->authorize('owns', Account::find($data['from_account']));
         
-        if( $data['type'] != 'transfer' )
+        if( $data['type'] == 'transfer' ) {
+            $this->authorize('owns', Account::find($data['to_account']));
+        } else {
             $data['to_account'] = null;
+        }
 
-        if( $data['type'] != 'bill' )
+        if( $data['type'] == 'bill' ) {
+            $this->authorize('owns', Bill::find($data['bill_id']));
+        } else {
             $data['bill_id'] = null;
+        }
             
         $purchase = Purchase::create($data);
 

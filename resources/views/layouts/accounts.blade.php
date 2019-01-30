@@ -32,7 +32,7 @@
 
                             <td>{{ $account->name }}</td>
 
-                            <td>{{ $account->balance }}</td>
+                            <td>${{ $account->balance }}</td>
 
                         </tr>
 

@@ -13,8 +13,8 @@ class BudgetPolicy
     /**
      * Determine if the given budget can be updated by the user.
      *
-     * @param  \App\User  $user
-     * @param  \App\Post  $post
+     * @param  \App\User    $user
+     * @param  \App\Budget  $budget
      * @return bool
      */
     public function update(User $user, Budget $budget)
