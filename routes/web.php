@@ -31,12 +31,7 @@ Route::delete('budgets/{budget}', 'BudgetController@destroy');
 | Account Routes
 |--------------------------------------------------------------------------
 */
-Route::get('accounts', 'AccountController@index');
-Route::get('accounts/create', 'AccountController@create');
-Route::get('accounts/{account}', 'AccountController@show');
 Route::post('accounts', 'AccountController@store');
-Route::patch('accounts/{account}', 'BudgetController@update');
-Route::delete('accounts/{account}', 'BudgetController@destroy');
 
 /*
 |--------------------------------------------------------------------------

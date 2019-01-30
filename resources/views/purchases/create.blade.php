@@ -36,7 +36,7 @@
 
         </div>
 
-        <div class="col-sm-6 destination d-none">
+        <div class="col-sm-6 conditional destination d-none">
 
             <div class="form-group">
                 <label for="to_account">Destination</label>
@@ -49,7 +49,7 @@
 
         </div>
 
-        <div class="col-sm-6 bill d-none">
+        <div class="col-sm-6 conditional bill d-none">
 
             <div class="form-group">
                 <label for="bill_id">Bill</label>

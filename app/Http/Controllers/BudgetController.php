@@ -54,7 +54,7 @@ class BudgetController extends Controller
         $this->authorize('update', $budget);
         
         $accounts = Auth::user()->accounts;
-        $purchases = $budget->purchases;
+        $purchases = $budget->purchases()->orderBy('created_at', 'desc')->get();
         $payments = $budget->payments;
         $bills = Auth::user()->bills;
 

@@ -36377,6 +36377,17 @@ module.exports = function(module) {
 
 /***/ }),
 
+/***/ "./resources/js/accounts.js":
+/*!**********************************!*\
+  !*** ./resources/js/accounts.js ***!
+  \**********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+
+
+/***/ }),
+
 /***/ "./resources/js/app.js":
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
@@ -36392,12 +36403,28 @@ module.exports = function(module) {
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 /*
 |--------------------------------------------------------
+| Global
+|--------------------------------------------------------
+*/
+
+
+__webpack_require__(/*! ./global */ "./resources/js/global.js");
+/*
+|--------------------------------------------------------
 | Budget
 |--------------------------------------------------------
 */
 
 
 __webpack_require__(/*! ./budget */ "./resources/js/budget.js");
+/*
+|--------------------------------------------------------
+| Accounts
+|--------------------------------------------------------
+*/
+
+
+__webpack_require__(/*! ./accounts */ "./resources/js/accounts.js");
 
 /***/ }),
 
@@ -36475,12 +36502,21 @@ $('#type').on('change', function () {
   $('.destination, .bill').addClass('d-none');
   if (type == 'transfer') $('.destination').removeClass('d-none');else if (type == 'bill') $('.bill').removeClass('d-none');
 });
+
+/***/ }),
+
+/***/ "./resources/js/global.js":
+/*!********************************!*\
+  !*** ./resources/js/global.js ***!
+  \********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
 /**
  * Allow two decimals form amount field
  * 
  */
-
-$('[name="amount"]').on('change', function () {
+$('[name="amount"], [name="balance"]').on('change', function () {
   $(this).val(parseFloat($(this).val()).toFixed(2));
 });
 /**
@@ -36488,29 +36524,30 @@ $('[name="amount"]').on('change', function () {
  * 
  */
 
-$('#new-purchase-modal').on('hidden.bs.modal', function () {
+$('.modal').on('hidden.bs.modal', function () {
+  $(this).find('.alert').remove();
   $(this).find('form').trigger('reset');
-  $('.destination, .bill').addClass('d-none');
+  $(this).find('.conditional').addClass('d-none');
 });
 /**
- * Submit form with footer button
+ * Submit modal forms with footer button
  * 
  */
 
-$('#new-purchase-modal .js-submit').on('click', function () {
+$('.modal .js-submit').on('click', function () {
   $(this).parents('.modal').find('.alert').remove();
   $(this).parents('.modal').find('form').submit();
 });
 /**
- * Send ajax request for new purchase
+ * Send ajax request for modal forms
  * 
  */
 
-$('#new-purchase-modal form').submit(function (e) {
+$('.modal form').submit(function (e) {
   e.preventDefault();
   var $modal = $(this).parents('.modal');
   $.ajax({
-    url: '/purchases',
+    url: $(this).attr('action'),
     type: 'POST',
     dataType: 'json',
     data: $(this).serialize(),
@@ -36518,7 +36555,7 @@ $('#new-purchase-modal form').submit(function (e) {
       response = data.responseJSON;
       $modal.find('.alert').remove();
       $modal.find('form').trigger('reset');
-      $modal.find('.destination').addClass('invisible');
+      $modal.find('.conditional').addClass('d-none');
       $('.modal-body', $modal).prepend('<div class="alert alert-success alert-dismissable fade show"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>New purchase added</div>');
     },
     error: function error(data) {

@@ -17,7 +17,7 @@
                 </div>
             @endif
 
-            @include('layouts.accounts')
+            @include('accounts.show')
 
             <div class="card">
 
