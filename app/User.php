@@ -45,4 +45,13 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Account');
     }
+
+    /**
+     * Get a list of bills tied to the user
+     * 
+     */
+    public function bills()
+    {
+        return $this->hasMany('App\Bill');
+    }
 }

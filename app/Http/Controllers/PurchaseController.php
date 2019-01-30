@@ -37,10 +37,11 @@ class PurchaseController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'budget_id' => 'required|integer',
+            'budget_id' => 'required|exists:budgets,id|integer',
+            'bill_id' => 'requiredif:type,bill|exists:bills,id|integer',
             'type' => 'required',
-            'from_account' => 'required|exists:accounts,id',
-            'to_account' => 'requiredif:type,transfer',
+            'from_account' => 'required|exists:accounts,id|integer',
+            'to_account' => 'requiredif:type,transfer|exists:accounts,id|integer',
             'name' => 'required',
             'amount' => 'required|numeric'
         ]);
@@ -50,6 +51,9 @@ class PurchaseController extends Controller
         
         if( $data['type'] != 'transfer' )
             $data['to_account'] = null;
+
+        if( $data['type'] != 'bill' )
+            $data['bill_id'] = null;
             
         $purchase = Purchase::create($data);
 

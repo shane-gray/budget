@@ -17,12 +17,21 @@ class Budget extends Model
     }
 
     /**
-     * Get purchases assigne to budget
+     * Get purchases assigned to budget
      * 
      */
     public function purchases()
     {
         return $this->hasMany('App\Purchase');
+    }
+
+    /**
+     * Get bill payments assigned to budget
+     * 
+     */
+    public function payments()
+    {
+        return $this->purchases()->where('type', '=', 'bill');
     }
 
 }
