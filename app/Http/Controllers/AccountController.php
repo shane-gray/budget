@@ -7,6 +7,17 @@ use Illuminate\Http\Request;
 
 class AccountController extends Controller
 {
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -35,7 +46,17 @@ class AccountController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Data validation
+        $data = $request->validate([
+            'name' => 'required',
+            'balance' => 'required|numeric'
+        ]);
+
+        $data['user_id'] = auth()->id();
+
+        $account = Account::create($data);
+
+        return response($account, 201);
     }
 
     /**

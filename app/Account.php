@@ -6,6 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Account extends Model
 {
+
+    /**
+     * Don't auto-apply mass assignment protection.
+     *
+     * @var array
+     */
+    protected $guarded = [];
     
     /**
      * Get the purchases tied to this account
