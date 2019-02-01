@@ -10496,6 +10496,13 @@ a.text-dark:focus {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
+/*	Accounts listing */
+
+.list__accounts tbody tr:hover {
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
 /*  Single budget page */
 
 .single-budget .list__accounts {

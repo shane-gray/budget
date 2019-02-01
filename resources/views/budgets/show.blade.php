@@ -12,7 +12,7 @@
 
         <div class="list__accounts col-md-4">
 
-            @include('accounts.show')
+            @include('accounts.list')
 
             <div class="card mb-4">
 

@@ -6,7 +6,7 @@
 
         @if( $accounts->isNotEmpty() )
 
-            <table class="table">
+            <table class="table list__accounts">
 
                 <thead>
 
@@ -26,7 +26,7 @@
 
                     @foreach( $accounts as $account )
 
-                        <tr>
+                        <tr data-id="{{ $account->id }}">
 
                             <th scope="row">{{ $account->id }}</th>
 

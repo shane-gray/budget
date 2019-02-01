@@ -17,7 +17,7 @@
                 </div>
             @endif
 
-            @include('accounts.show')
+            @include('accounts.list')
 
             <div class="card">
 
