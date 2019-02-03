@@ -48,31 +48,10 @@
 
         @endif
 
-        <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#new-account-modal">
+        <a href="/accounts/create" class="btn btn-primary float-right" data-toggle="modal" data-target="#modal">
             <span class="oi oi-plus"></span> New account
-        </button>
+        </a>
 
     </div>
 
-</div>
-
-<!-- New account modal -->
-<div id="new-account-modal" class="modal fade">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">New account</h5>
-                <button type="button" class="close" data-dismiss="modal">
-                    <span>&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                @include('accounts.create')
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary js-submit">Save account</button>
-            </div>
-        </div>
-    </div>
 </div>

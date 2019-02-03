@@ -32,6 +32,7 @@ Route::delete('budgets/{budget}', 'BudgetController@destroy');
 |--------------------------------------------------------------------------
 */
 Route::post('accounts', 'AccountController@store');
+Route::get('accounts/create', 'AccountController@create');
 
 /*
 |--------------------------------------------------------------------------

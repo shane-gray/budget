@@ -31,11 +31,16 @@ class AccountController extends Controller
     /**
      * Show the form for creating a new resource.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        if( $request->ajax() ) {
+            return view('accounts.create')->render();
+        } else {
+            return redirect('/');
+        }
     }
 
     /**

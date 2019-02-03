@@ -36392,6 +36392,9 @@ module.exports = function(module) {
 $('.list__accounts').on('click', 'tr', function () {
   var account_id = $(this).data('id');
 });
+$('#new-account-modal').on('show.bs.modal', function (e) {
+  console.log($(e.relatedTarget).attr('href'));
+});
 
 /***/ }),
 
@@ -36519,12 +36522,22 @@ $('#type').on('change', function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
+/*
+|-------------------------------------------------
+| Modals
+|-------------------------------------------------
+*/
+
 /**
- * Allow two decimals form amount field
+ * Get modal content before show
  * 
  */
-$('[name="amount"], [name="balance"]').on('change', function () {
-  $(this).val(parseFloat($(this).val()).toFixed(2));
+$('.modal').on('show.bs.modal', function (e) {
+  var $this = $(this),
+      $trigger = $(e.relatedTarget);
+  $.get($trigger.attr('href'), function (html) {
+    $this.find('.modal-content').replaceWith(html);
+  });
 });
 /**
  * Reset fields on modal close
@@ -36571,6 +36584,20 @@ $('.modal form').submit(function (e) {
       $('.modal-body', $modal).prepend('<div class="alert alert-danger alert-dismissable fade show"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' + response.message + '</div>');
     }
   });
+});
+/*
+|-------------------------------------------------
+| Fields
+|-------------------------------------------------
+*/
+
+/**
+ * Allow two decimals form amount field
+ * 
+ */
+
+$('[name="amount"], [name="balance"]').on('change', function () {
+  $(this).val(parseFloat($(this).val()).toFixed(2));
 });
 
 /***/ }),

@@ -75,6 +75,13 @@
 
         <main class="py-4">
             @yield('content')
+
+            <div id="modal" class="modal fade">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                    </div>
+                </div>
+            </div>
         </main>
     </div>
 </body>
