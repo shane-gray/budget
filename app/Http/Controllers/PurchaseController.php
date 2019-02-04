@@ -34,11 +34,24 @@ class PurchaseController extends Controller
     /**
      * Show the form for creating a new resource.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        if($request->ajax() && $request->budget_id) {
+
+            $budget = Budget::find($request->budget_id);
+            $this->authorize('update', $budget);
+
+            $accounts = auth()->user()->accounts;
+            $bills = auth()->user()->bills;
+
+            return view('purchases.create', compact('budget', 'accounts', 'bills'));
+
+        } else {
+            return redirect('/');
+        }
     }
 
     /**

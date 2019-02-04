@@ -36392,9 +36392,6 @@ module.exports = function(module) {
 $('.list__accounts').on('click', 'tr', function () {
   var account_id = $(this).data('id');
 });
-$('#new-account-modal').on('show.bs.modal', function (e) {
-  console.log($(e.relatedTarget).attr('href'));
-});
 
 /***/ }),
 
@@ -36507,7 +36504,7 @@ if (token) {
  * Display destination account for transfers
  * 
  */
-$('#type').on('change', function () {
+$('.modal').on('change', '#type', function () {
   var type = $(this).find('option:selected').val();
   $('.destination, .bill').addClass('d-none');
   if (type == 'transfer') $('.destination').removeClass('d-none');else if (type == 'bill') $('.bill').removeClass('d-none');
@@ -36534,8 +36531,9 @@ $('#type').on('change', function () {
  */
 $('.modal').on('show.bs.modal', function (e) {
   var $this = $(this),
-      $trigger = $(e.relatedTarget);
-  $.get($trigger.attr('href'), function (html) {
+      $trigger = $(e.relatedTarget),
+      data = $trigger.data();
+  $.get($trigger.attr('href'), data, function (html) {
     $this.find('.modal-content').replaceWith(html);
   });
 });
@@ -36554,7 +36552,7 @@ $('.modal').on('hidden.bs.modal', function () {
  * 
  */
 
-$('.modal .js-submit').on('click', function () {
+$('.modal').on('click', '.js-submit', function () {
   $(this).parents('.modal').find('.alert').remove();
   $(this).parents('.modal').find('form').submit();
 });
@@ -36563,7 +36561,7 @@ $('.modal .js-submit').on('click', function () {
  * 
  */
 
-$('.modal form').submit(function (e) {
+$('.modal').on('submit', 'form', function (e) {
   e.preventDefault();
   var $modal = $(this).parents('.modal');
   $.ajax({
@@ -36596,7 +36594,7 @@ $('.modal form').submit(function (e) {
  * 
  */
 
-$('[name="amount"], [name="balance"]').on('change', function () {
+$('#modal').on('change', '[name="amount"], [name="balance"]', function () {
   $(this).val(parseFloat($(this).val()).toFixed(2));
 });
 

@@ -40,3 +40,4 @@ Route::get('accounts/create', 'AccountController@create');
 |--------------------------------------------------------------------------
 */
 Route::post('purchases', 'PurchaseController@store');
+Route::get('purchases/create', 'PurchaseController@create');

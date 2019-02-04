@@ -11,9 +11,10 @@
 $('.modal').on('show.bs.modal', function(e) {
 
     var $this = $(this),
-        $trigger = $(e.relatedTarget);
+        $trigger = $(e.relatedTarget),
+        data = $trigger.data();
 
-    $.get($trigger.attr('href'), function(html) {
+    $.get($trigger.attr('href'), data, function(html) {
         $this.find('.modal-content').replaceWith(html);
     });
 
@@ -33,7 +34,7 @@ $('.modal').on('hidden.bs.modal', function() {
  * Submit modal forms with footer button
  * 
  */
-$('.modal .js-submit').on('click', function() {
+$('.modal').on('click', '.js-submit', function() {
     $(this).parents('.modal').find('.alert').remove();
     $(this).parents('.modal').find('form').submit();
 });
@@ -42,7 +43,7 @@ $('.modal .js-submit').on('click', function() {
  * Send ajax request for modal forms
  * 
  */
-$('.modal form').submit(function(e) {
+$('.modal').on('submit', 'form', function(e) {
     e.preventDefault();
 
     var $modal = $(this).parents('.modal');
@@ -77,6 +78,6 @@ $('.modal form').submit(function(e) {
  * Allow two decimals form amount field
  * 
  */
-$('[name="amount"], [name="balance"]').on('change', function() {
+$('#modal').on('change', '[name="amount"], [name="balance"]',  function() {
     $(this).val( parseFloat( $(this).val() ).toFixed( 2 ) );
 });
