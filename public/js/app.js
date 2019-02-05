@@ -36580,9 +36580,10 @@ $('.modal').on('submit', 'form', function (e) {
       $modal.find('.alert').remove();
       $modal.find('form').trigger('reset');
       $modal.find('.conditional').addClass('d-none');
-      $('.modal-body', $modal).prepend('<div class="alert alert-success alert-dismissable fade show"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>New purchase added</div>');
+      $('.modal-body', $modal).prepend('<div class="alert alert-success alert-dismissable fade show"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' + response.message + '</div>');
     },
-    error: function error(response) {
+    error: function error(_error2) {
+      response = _error2.responseJSON;
       $modal.find('.alert').remove();
       $('.modal-body', $modal).prepend('<div class="alert alert-danger alert-dismissable fade show"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' + response.message + '</div>');
     }
