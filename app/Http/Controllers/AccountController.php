@@ -83,7 +83,12 @@ class AccountController extends Controller
      */
     public function edit(Account $account)
     {
-        //
+        $this->authorize('owns', $account);
+
+        return response()->json([
+            'message' => '',
+            'html' => view('accounts.edit', compact('account'))->render()
+        ]);
     }
 
     /**
@@ -95,7 +100,18 @@ class AccountController extends Controller
      */
     public function update(Request $request, Account $account)
     {
-        //
+        $this->authorize('owns', $account);
+
+        $data = $request->validate([
+            'name' => 'required',
+            'balance' => 'required|numeric'
+        ]);
+
+        $account->update($data);
+
+        return response()->json([
+            'message' => 'Account updated successfully.'
+        ]);
     }
 
     /**

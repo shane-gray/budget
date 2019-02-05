@@ -26,7 +26,7 @@
 
                     @foreach( $accounts as $account )
 
-                        <tr data-id="{{ $account->id }}">
+                        <tr data-id="{{ $account->id }}" data-href="/accounts/{{ $account->id }}" data-toggle="modal" data-target="#modal">
 
                             <th scope="row">{{ $account->id }}</th>
 

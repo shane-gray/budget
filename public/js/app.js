@@ -36385,13 +36385,9 @@ module.exports = function(module) {
 /***/ (function(module, exports) {
 
 /**
- * Display edit account modal on
- * table row click
+ * Delete account
  * 
  */
-$('.list__accounts').on('click', 'tr', function () {
-  var account_id = $(this).data('id');
-});
 
 /***/ }),
 
@@ -36524,17 +36520,30 @@ $('.modal').on('change', '#type', function () {
 | Modals
 |-------------------------------------------------
 */
-
+var modal_content = $('#modal .modal-content').html();
 /**
  * Get modal content before show
  * 
  */
+
 $('.modal').on('show.bs.modal', function (e) {
   var $this = $(this),
       $trigger = $(e.relatedTarget),
-      data = $trigger.data();
-  $.get($trigger.attr('href'), data, function (html) {
-    $this.find('.modal-content').replaceWith(html);
+      data = $trigger.data(),
+      href = $trigger.attr('href') ? $trigger.attr('href') : $trigger.data('href');
+  $.ajax({
+    url: href,
+    type: 'GET',
+    dataType: 'json',
+    data: data,
+    success: function success(response) {
+      console.log(response.html);
+      $this.find('.modal-content').replaceWith(response.html);
+    },
+    error: function error(_error) {
+      response = _error.responseJSON;
+      $('.modal-body', $this).prepend('<div class="alert alert-danger alert-dismissable fade show"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' + response.message + '</div>');
+    }
   });
 });
 /**
@@ -36543,9 +36552,7 @@ $('.modal').on('show.bs.modal', function (e) {
  */
 
 $('.modal').on('hidden.bs.modal', function () {
-  $(this).find('.alert').remove();
-  $(this).find('form').trigger('reset');
-  $(this).find('.conditional').addClass('d-none');
+  $(this).find('.modal-content').html(modal_content);
 });
 /**
  * Submit modal forms with footer button
@@ -36569,15 +36576,13 @@ $('.modal').on('submit', 'form', function (e) {
     type: 'POST',
     dataType: 'json',
     data: $(this).serialize(),
-    success: function success(data) {
-      response = data.responseJSON;
+    success: function success(response) {
       $modal.find('.alert').remove();
       $modal.find('form').trigger('reset');
       $modal.find('.conditional').addClass('d-none');
       $('.modal-body', $modal).prepend('<div class="alert alert-success alert-dismissable fade show"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>New purchase added</div>');
     },
-    error: function error(data) {
-      response = data.responseJSON;
+    error: function error(response) {
       $modal.find('.alert').remove();
       $('.modal-body', $modal).prepend('<div class="alert alert-danger alert-dismissable fade show"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' + response.message + '</div>');
     }

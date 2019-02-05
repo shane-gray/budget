@@ -79,6 +79,9 @@
             <div id="modal" class="modal fade">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
+                        <div class="modal-header"></div>
+                        <div class="modal-body"></div>
+                        <div class="modal-footer"></div>
                     </div>
                 </div>
             </div>

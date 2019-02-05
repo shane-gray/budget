@@ -33,6 +33,8 @@ Route::delete('budgets/{budget}', 'BudgetController@destroy');
 */
 Route::post('accounts', 'AccountController@store');
 Route::get('accounts/create', 'AccountController@create');
+Route::get('accounts/{account}', 'AccountController@edit');
+Route::patch('accounts/{account}', 'AccountController@update');
 
 /*
 |--------------------------------------------------------------------------
