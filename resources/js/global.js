@@ -23,7 +23,9 @@ $('.modal').on('show.bs.modal', function(e) {
         dataType: 'json',
         data: data,
         success: function(response) {
-            $this.find('.modal-content').replaceWith(response.html);
+            $.each(response.html, function(selector, html) {
+                $(selector).replaceWith(html);
+            });
         },
         error: function(error) {
             response = error.responseJSON;
@@ -57,23 +59,19 @@ $('.modal').on('click', '.js-submit', function() {
 $('.modal').on('submit', 'form', function(e) {
     e.preventDefault();
 
-    var $modal = $(this).parents('.modal');
+    var $modal = $(this).parents('.modal'),
+        $form = $(this);
 
     $.ajax({
-        url: $(this).attr('action'),
+        url: $form.attr('action'),
         type: 'POST',
         dataType: 'json',
-        data: $(this).serialize(),
+        data: $form.serialize(),
         success: function(response) {
-            $modal.find('.alert').remove();
-            $modal.find('form').trigger('reset');
-            $modal.find('.conditional').addClass('d-none');
-            $('.modal-body', $modal).prepend('<div class="alert alert-success alert-dismissable fade show"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' + response.message + '</div>');
+            ajax_success($modal, $form, response);
         },
         error: function(error) {
-            response = error.responseJSON;
-            $modal.find('.alert').remove();
-            $('.modal-body', $modal).prepend('<div class="alert alert-danger alert-dismissable fade show"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' + response.message + '</div>');
+            ajax_error($modal, $form, error);
         }
     });
 });
@@ -96,19 +94,44 @@ $('.modal').on('click', '.js-delete', function() {
             '_method': 'DELETE'
         },
         success: function(response) {
-            $modal.find('.alert').remove();
-            $modal.find('form').trigger('reset');
-            $modal.find('.conditional').addClass('d-none');
-            $('.modal-body', $modal).prepend('<div class="alert alert-success alert-dismissable fade show"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' + response.message + '</div>');
+            ajax_success($modal, $form, response);
         },
         error: function(error) {
-            response = error.responseJSON;
-            $modal.find('.alert').remove();
-            $('.modal-body', $modal).prepend('<div class="alert alert-danger alert-dismissable fade show"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' + response.message + '</div>');
+            ajax_error($modal, $form, error);
         }
     });
 
 });
+
+/**
+ * Handle successful ajax return
+ * 
+ */
+function ajax_success($modal, $form, response) {
+    var type = $form.data('type');
+
+    if( type != 'edit' ) {
+        $form.trigger('reset');
+        $modal.find('.conditional').addClass('d-none');
+    }
+
+    $modal.find('.alert').remove();
+    $('.modal-body', $modal).prepend('<div class="alert alert-success alert-dismissable fade show"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' + response.message + '</div>');
+
+    $.each(response.html, function(selector, html) {
+        $(selector).replaceWith(html);
+    });
+}
+
+/**
+ * Handle failed ajax return
+ * 
+ */
+function ajax_error($modal, $form, error) {
+    response = error.responseJSON;
+    $modal.find('.alert').remove();
+    $('.modal-body', $modal).prepend('<div class="alert alert-danger alert-dismissable fade show"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' + response.message + '</div>');
+}
 
 /*
 |-------------------------------------------------

@@ -6,7 +6,7 @@
         </button>
     </div>
     <div class="modal-body">
-        <form action="/accounts" method="post">
+        <form action="/accounts" method="post" data-type="create">
             @csrf
             <div class="form-row">
                 <div class="col">

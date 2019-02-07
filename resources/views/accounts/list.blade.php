@@ -1,4 +1,4 @@
-<div class="card mb-4">
+<div class="card card__accounts mb-4">
 
     <div class="card-header">Accounts</div>
 

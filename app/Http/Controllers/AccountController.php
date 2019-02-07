@@ -38,7 +38,9 @@ class AccountController extends Controller
     {
         if( $request->ajax() ) {
             return response()->json([
-                'html' => view('accounts.create')->render()
+                'html' => [
+                    '#modal .modal-content' => view('accounts.create')->render()
+                ]
             ]);
         } else {
             return redirect('/');
@@ -59,12 +61,18 @@ class AccountController extends Controller
             'balance' => 'required|numeric'
         ]);
 
+        // Insertion
         $data['user_id'] = auth()->id();
-
         $account = Account::create($data);
 
+        // Response
+        $accounts = auth()->user()->accounts;
+
         return response()->json([
-            'message' => 'Account created successfully.'
+            'message' => 'Account created successfully.',
+            'html' => [
+                '.card__accounts' => view('accounts.list', compact('accounts'))->render()
+            ]
         ]);
     }
 
@@ -76,10 +84,14 @@ class AccountController extends Controller
      */
     public function edit(Account $account)
     {
+        // Authorize
         $this->authorize('owns', $account);
 
+        // Response
         return response()->json([
-            'html' => view('accounts.edit', compact('account'))->render()
+            'html' => [
+                '#modal .modal-content' => view('accounts.edit', compact('account'))->render()
+            ]
         ]);
     }
 
@@ -92,17 +104,26 @@ class AccountController extends Controller
      */
     public function update(Request $request, Account $account)
     {
+        // Authorize
         $this->authorize('owns', $account);
 
+        // Validate
         $data = $request->validate([
             'name' => 'required',
             'balance' => 'required|numeric'
         ]);
 
+        // Update
         $account->update($data);
 
+        // Response
+        $accounts = auth()->user()->accounts;
+
         return response()->json([
-            'message' => 'Account updated successfully.'
+            'message' => 'Account updated successfully.',
+            'html' => [
+                '.card__accounts' => view('accounts.list', compact('accounts'))->render()
+            ]
         ]);
     }
 
@@ -114,12 +135,20 @@ class AccountController extends Controller
      */
     public function destroy(Account $account)
     {
+        // Authorize
         $this->authorize('owns', $account);
 
+        // Delete
         $account->delete();
 
+        // Response
+        $accounts = auth()->user()->accounts;
+
         return response()->json([
-            'message' => 'Account deleted successfully.'
+            'message' => 'Account deleted successfully.',
+            'html' => [
+                '.card__accounts' => view('accounts.list', compact('accounts'))->render()
+            ]
         ]);
     }
 }

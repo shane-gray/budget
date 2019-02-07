@@ -6,7 +6,7 @@
         </button>
     </div>
     <div class="modal-body">
-        <form action="/accounts/{{ $account->id }}" method="post">
+        <form action="/accounts/{{ $account->id }}" method="post" data-type="edit">
             @csrf
             @method('PATCH')
             <div class="form-row">
