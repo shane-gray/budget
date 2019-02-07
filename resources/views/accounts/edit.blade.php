@@ -20,7 +20,7 @@
         </form>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-danger float-left">Delete</button>
+        <button type="button" class="btn btn-danger float-left js-delete">Delete</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
         <button type="button" class="btn btn-primary js-submit">Save account</button>
     </div>

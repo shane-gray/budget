@@ -31,10 +31,9 @@ Route::delete('budgets/{budget}', 'BudgetController@destroy');
 | Account Routes
 |--------------------------------------------------------------------------
 */
-Route::post('accounts', 'AccountController@store');
-Route::get('accounts/create', 'AccountController@create');
-Route::get('accounts/{account}', 'AccountController@edit');
-Route::patch('accounts/{account}', 'AccountController@update');
+Route::resource('accounts', 'AccountController')->except([
+    'show'
+]);;
 
 /*
 |--------------------------------------------------------------------------

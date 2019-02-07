@@ -36537,7 +36537,6 @@ $('.modal').on('show.bs.modal', function (e) {
     dataType: 'json',
     data: data,
     success: function success(response) {
-      console.log(response.html);
       $this.find('.modal-content').replaceWith(response.html);
     },
     error: function error(_error) {
@@ -36584,6 +36583,35 @@ $('.modal').on('submit', 'form', function (e) {
     },
     error: function error(_error2) {
       response = _error2.responseJSON;
+      $modal.find('.alert').remove();
+      $('.modal-body', $modal).prepend('<div class="alert alert-danger alert-dismissable fade show"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' + response.message + '</div>');
+    }
+  });
+});
+/**
+ * Send delete request
+ * 
+ */
+
+$('.modal').on('click', '.js-delete', function () {
+  var $modal = $(this).parents('.modal'),
+      $form = $modal.find('form');
+  $.ajax({
+    url: $form.attr('action'),
+    type: 'POST',
+    dataType: 'json',
+    data: {
+      '_token': $form.find('[name="_token"]').val(),
+      '_method': 'DELETE'
+    },
+    success: function success(response) {
+      $modal.find('.alert').remove();
+      $modal.find('form').trigger('reset');
+      $modal.find('.conditional').addClass('d-none');
+      $('.modal-body', $modal).prepend('<div class="alert alert-success alert-dismissable fade show"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' + response.message + '</div>');
+    },
+    error: function error(_error3) {
+      response = _error3.responseJSON;
       $modal.find('.alert').remove();
       $('.modal-body', $modal).prepend('<div class="alert alert-danger alert-dismissable fade show"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' + response.message + '</div>');
     }

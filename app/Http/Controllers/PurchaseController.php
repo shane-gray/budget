@@ -47,7 +47,9 @@ class PurchaseController extends Controller
             $accounts = auth()->user()->accounts;
             $bills = auth()->user()->bills;
 
-            return view('purchases.create', compact('budget', 'accounts', 'bills'));
+            return response()->json([
+                'html' => view('purchases.create', compact('budget', 'accounts', 'bills'))->render()
+            ]);
 
         } else {
             return redirect('/');
@@ -91,7 +93,9 @@ class PurchaseController extends Controller
             
         $purchase = Purchase::create($data);
 
-        return response($purchase, 201);
+        return response()->json([
+            'message' => 'Purchase added successfully.'
+        ]);
     }
 
     /**

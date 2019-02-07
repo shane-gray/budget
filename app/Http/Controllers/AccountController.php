@@ -37,7 +37,9 @@ class AccountController extends Controller
     public function create(Request $request)
     {
         if( $request->ajax() ) {
-            return view('accounts.create')->render();
+            return response()->json([
+                'html' => view('accounts.create')->render()
+            ]);
         } else {
             return redirect('/');
         }
@@ -61,18 +63,9 @@ class AccountController extends Controller
 
         $account = Account::create($data);
 
-        return response($account, 201);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Account  $account
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Account $account)
-    {
-        //
+        return response()->json([
+            'message' => 'Account created successfully.'
+        ]);
     }
 
     /**
@@ -86,7 +79,6 @@ class AccountController extends Controller
         $this->authorize('owns', $account);
 
         return response()->json([
-            'message' => '',
             'html' => view('accounts.edit', compact('account'))->render()
         ]);
     }
@@ -122,6 +114,12 @@ class AccountController extends Controller
      */
     public function destroy(Account $account)
     {
-        //
+        $this->authorize('owns', $account);
+
+        $account->delete();
+
+        return response()->json([
+            'message' => 'Account deleted successfully.'
+        ]);
     }
 }
