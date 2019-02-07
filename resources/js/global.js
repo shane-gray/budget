@@ -115,12 +115,12 @@ function ajax_success($modal, $form, response) {
         $modal.find('.conditional').addClass('d-none');
     }
 
-    $modal.find('.alert').remove();
-    $('.modal-body', $modal).prepend('<div class="alert alert-success alert-dismissable fade show"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' + response.message + '</div>');
-
     $.each(response.html, function(selector, html) {
         $(selector).replaceWith(html);
     });
+
+    $modal.find('.alert').remove();
+    $('.modal-body', $modal).prepend('<div class="alert alert-success alert-dismissable fade show"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' + response.message + '</div>');
 }
 
 /**

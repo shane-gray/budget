@@ -147,7 +147,8 @@ class AccountController extends Controller
         return response()->json([
             'message' => 'Account deleted successfully.',
             'html' => [
-                '.card__accounts' => view('accounts.list', compact('accounts'))->render()
+                '.card__accounts' => view('accounts.list', compact('accounts'))->render(),
+                '#modal .modal-footer, #modal .modal-body .form-row' => ''
             ]
         ]);
     }

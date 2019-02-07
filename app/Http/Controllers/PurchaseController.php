@@ -198,7 +198,8 @@ class PurchaseController extends Controller
         return response()->json([
             'message' => 'Purchase deleted successfully.',
             'html' => [
-                '.card__purchases' => view('purchases.list', compact('budget', 'accounts', 'purchases'))->render()
+                '.card__purchases' => view('purchases.list', compact('budget', 'accounts', 'purchases'))->render(),
+                '#modal .modal-footer, #modal .modal-body .form-row' => ''
             ]
         ]);
     }
