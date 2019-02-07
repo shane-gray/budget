@@ -40,9 +40,15 @@ Route::resource('accounts', 'AccountController')->except([
 | Purchase Routes
 |--------------------------------------------------------------------------
 */
-Route::post('purchases', 'PurchaseController@store');
-Route::get('purchases/create', 'PurchaseController@create');
-
 Route::resource('purchases', 'PurchaseController')->except([
+    'show', 'index'
+]);
+
+/*
+|--------------------------------------------------------------------------
+| Bill Routes
+|--------------------------------------------------------------------------
+*/
+Route::resource('bills', 'BillController')->except([
     'show', 'index'
 ]);

@@ -8,6 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Bill extends Model
 {
+
+    /**
+     * Don't auto-apply mass assignment protection.
+     *
+     * @var array
+     */
+    protected $guarded = [];
     
     /**
      * Get the user that owns the bill.

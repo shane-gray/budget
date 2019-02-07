@@ -1,4 +1,4 @@
-<div class="card mb-4">
+<div class="card card__bills mb-4">
 
     <div class="card-header">Bills</div>
 
@@ -48,7 +48,7 @@
 
         @endif
 
-        <a href="/bills/create" class="btn btn-primary btn-primary float-right"><span class="oi oi-plus"></span> New bill</a>
+        <a href="/bills/create" class="btn btn-primary btn-primary float-right" data-toggle="modal" data-target="#modal" data-budget_id="{{ $budget->id }}"><span class="oi oi-plus"></span> New bill</a>
 
     </div>
 
