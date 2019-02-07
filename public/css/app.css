@@ -10496,9 +10496,10 @@ a.text-dark:focus {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
-/*	Accounts listing */
+/*	Listings */
 
-.list__accounts tbody tr:hover {
+.card__accounts tbody tr:hover,
+.card__purchases tbody tr:hover {
   cursor: pointer;
   background-color: rgba(0, 0, 0, 0.03);
 }

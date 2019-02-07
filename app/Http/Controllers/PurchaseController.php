@@ -20,16 +20,6 @@ class PurchaseController extends Controller
     {
         $this->middleware('auth');
     }
-    
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
 
     /**
      * Show the form for creating a new resource.
@@ -41,14 +31,18 @@ class PurchaseController extends Controller
     {
         if($request->ajax() && $request->budget_id) {
 
+            // Authorization
             $budget = Budget::find($request->budget_id);
             $this->authorize('update', $budget);
 
+            // Response
             $accounts = auth()->user()->accounts;
             $bills = auth()->user()->bills;
 
             return response()->json([
-                'html' => view('purchases.create', compact('budget', 'accounts', 'bills'))->render()
+                'html' => [
+                    '#modal .modal-content' => view('purchases.create', compact('budget', 'accounts', 'bills'))->render()
+                ]
             ]);
 
         } else {
@@ -64,7 +58,7 @@ class PurchaseController extends Controller
      */
     public function store(Request $request)
     {
-        // Data validation
+        // Validation
         $data = $request->validate([
             'budget_id' => 'required|exists:budgets,id|integer',
             'bill_id' => 'required_if:type,bill|exists:bills,id|integer',
@@ -75,7 +69,7 @@ class PurchaseController extends Controller
             'amount' => 'required|numeric'
         ]);
 
-        // Authorizations
+        // Authorization
         $this->authorize('update', Budget::find($data['budget_id']));
         $this->authorize('owns', Account::find($data['from_account']));
         
@@ -90,23 +84,21 @@ class PurchaseController extends Controller
         } else {
             $data['bill_id'] = null;
         }
-            
+        
+        // Create
         $purchase = Purchase::create($data);
 
-        return response()->json([
-            'message' => 'Purchase added successfully.'
-        ]);
-    }
+        // Response
+        $budget = Budget::find($data['budget_id']);
+        $accounts = auth()->user()->accounts;
+        $purchases = $budget->purchases()->orderBy('created_at', 'desc')->get();
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Purchase  $purchase
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Purchase $purchase)
-    {
-        //
+        return response()->json([
+            'message' => 'Purchase added successfully.',
+            'html' => [
+                '.card__purchases' => view('purchases.list', compact('budget', 'accounts', 'purchases'))->render()
+            ]
+        ]);
     }
 
     /**
@@ -117,7 +109,20 @@ class PurchaseController extends Controller
      */
     public function edit(Purchase $purchase)
     {
-        //
+        // Authorization
+        $budget = Budget::find($purchase->budget_id);
+        $this->authorize('update', $budget);
+
+        // Response
+        $accounts = auth()->user()->accounts;
+        $bills = auth()->user()->bills;
+
+        return response()->json([
+            'html' => [
+                '#modal .modal-content' => view('purchases.edit', compact('budget', 'accounts', 'bills', 'purchase'))->render()
+            ]
+        ]);
+
     }
 
     /**
@@ -129,7 +134,46 @@ class PurchaseController extends Controller
      */
     public function update(Request $request, Purchase $purchase)
     {
-        //
+        // Validation
+        $data = $request->validate([
+            'type' => 'required',
+            'from_account' => 'required|exists:accounts,id|integer',
+            'to_account' => 'required_if:type,transfer|exists:accounts,id|integer',
+            'name' => 'required',
+            'amount' => 'required|numeric'
+        ]);
+
+        // Authorization
+        $budget = Budget::find($purchase->budget_id);
+        $this->authorize('update', $budget);
+        $this->authorize('owns', Account::find($data['from_account']));
+        
+        if( $data['type'] == 'transfer' ) {
+            $this->authorize('owns', Account::find($data['to_account']));
+        } else {
+            $data['to_account'] = null;
+        }
+
+        if( $data['type'] == 'bill' ) {
+            $this->authorize('owns', Bill::find($data['bill_id']));
+        } else {
+            $data['bill_id'] = null;
+        }
+
+        // Update
+        $purchase->update($data);
+
+        // Response
+        $accounts = auth()->user()->accounts;
+        $purchases = $budget->purchases()->orderBy('created_at', 'desc')->get();
+
+        return response()->json([
+            'message' => 'Purchase updated successfully.',
+            'html' => [
+                '.card__purchases' => view('purchases.list', compact('budget', 'accounts', 'purchases'))->render()
+            ]
+        ]);
+
     }
 
     /**
@@ -140,6 +184,22 @@ class PurchaseController extends Controller
      */
     public function destroy(Purchase $purchase)
     {
-        //
+        // Authorization
+        $budget = Budget::find($purchase->budget_id);
+        $this->authorize('update', $budget);
+
+        // Delete
+        $purchase->delete();
+
+        // Response
+        $accounts = auth()->user()->accounts;
+        $purchases = $budget->purchases()->orderBy('created_at', 'desc')->get();
+
+        return response()->json([
+            'message' => 'Purchase deleted successfully.',
+            'html' => [
+                '.card__purchases' => view('purchases.list', compact('budget', 'accounts', 'purchases'))->render()
+            ]
+        ]);
     }
 }

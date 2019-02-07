@@ -32,7 +32,7 @@ Route::delete('budgets/{budget}', 'BudgetController@destroy');
 |--------------------------------------------------------------------------
 */
 Route::resource('accounts', 'AccountController')->except([
-    'show'
+    'show', 'index'
 ]);;
 
 /*
@@ -42,3 +42,7 @@ Route::resource('accounts', 'AccountController')->except([
 */
 Route::post('purchases', 'PurchaseController@store');
 Route::get('purchases/create', 'PurchaseController@create');
+
+Route::resource('purchases', 'PurchaseController')->except([
+    'show', 'index'
+]);
