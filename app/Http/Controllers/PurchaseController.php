@@ -88,6 +88,14 @@ class PurchaseController extends Controller
         // Create
         $purchase = Purchase::create($data);
 
+        $from_account = Account::find($data['from_account']);
+        $from_account->subtract($data['amount']);
+
+        if( $data['type'] == 'transfer' ) {
+            $to_account = Account::find($data['to_account']);
+            $to_account->add($data['amount']);
+        }
+
         // Response
         $budget = Budget::find($data['budget_id']);
         $accounts = auth()->user()->accounts;
