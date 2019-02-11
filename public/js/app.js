@@ -36377,20 +36377,6 @@ module.exports = function(module) {
 
 /***/ }),
 
-/***/ "./resources/js/accounts.js":
-/*!**********************************!*\
-  !*** ./resources/js/accounts.js ***!
-  \**********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/**
- * Delete account
- * 
- */
-
-/***/ }),
-
 /***/ "./resources/js/app.js":
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
@@ -36420,14 +36406,6 @@ __webpack_require__(/*! ./global */ "./resources/js/global.js");
 
 
 __webpack_require__(/*! ./budget */ "./resources/js/budget.js");
-/*
-|--------------------------------------------------------
-| Accounts
-|--------------------------------------------------------
-*/
-
-
-__webpack_require__(/*! ./accounts */ "./resources/js/accounts.js");
 
 /***/ }),
 

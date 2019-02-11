@@ -1,4 +1,0 @@
-/**
- * Delete account
- * 
- */
