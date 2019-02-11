@@ -26,7 +26,7 @@
 
                     @foreach( $bills as $bill )
 
-                        <tr>
+                        <tr data-id="{{ $bill->id }}" data-href="/bills/{{ $bill->id }}/edit" data-budget_id="{{ $budget->id }}" data-toggle="modal" data-target="#modal">
 
                             <th scope="row">{{ $bill->id }}</th>
 

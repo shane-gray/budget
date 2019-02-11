@@ -83,16 +83,17 @@ $('.modal').on('submit', 'form', function(e) {
 $('.modal').on('click', '.js-delete', function() {
 
     var $modal = $(this).parents('.modal'),
-        $form = $modal.find('form');
+        $form = $modal.find('form'),
+        data = $(this).data();
+
+    data._token = $form.find('[name="_token"]').val();
+    data._method = 'DELETE';
 
     $.ajax({
         url: $form.attr('action'),
         type: 'POST',
         dataType: 'json',
-        data: {
-            '_token': $form.find('[name="_token"]').val(),
-            '_method': 'DELETE'
-        },
+        data: data,
         success: function(response) {
             ajax_success($modal, $form, response);
         },

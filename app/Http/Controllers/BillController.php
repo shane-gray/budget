@@ -92,9 +92,24 @@ class BillController extends Controller
      * @param  \App\Bill  $bill
      * @return \Illuminate\Http\Response
      */
-    public function edit(Bill $bill)
+    public function edit(Request $request, Bill $bill)
     {
-        
+        // Validation
+        $request->validate([
+            'budget_id' => 'required|exists:budgets,id|integer'
+        ]);
+
+        // Authorization
+        $budget = Budget::find($request->budget_id);
+        $this->authorize('update', $budget);
+        $this->authorize('owns', $bill);
+
+        // Response
+        return response()->json([
+            'html' => [
+                '#modal .modal-content' => view('bills.edit', compact('budget', 'bill'))->render()
+            ]
+        ]);
     }
 
     /**
@@ -106,7 +121,31 @@ class BillController extends Controller
      */
     public function update(Request $request, Bill $bill)
     {
-        
+        // Validation
+        $request->validate([
+            'name' => 'required',
+            'budget_id' => 'required|exists:budgets,id|integer'
+        ]);
+
+        // Authorization
+        $budget = Budget::find($request->budget_id);
+        $this->authorize('update', $budget);
+        $this->authorize('owns', $bill);
+
+        // Update
+        $bill->update([
+            'name' => $request->name
+        ]);
+
+        // Response
+        $bills = auth()->user()->bills;
+
+        return response()->json([
+            'message' => 'Bill updated successfully.',
+            'html' => [
+                '.card__bills' => view('bills.list', compact('budget', 'bills'))->render()
+            ]
+        ]);
     }
 
     /**
@@ -115,9 +154,31 @@ class BillController extends Controller
      * @param  \App\bill  $bill
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Bill $bill)
+    public function destroy(Request $request, Bill $bill)
     {
-        
+        // Validation
+        $request->validate([
+            'budget_id' => 'required|numeric|exists:budgets,id'
+        ]);
+
+        // Authorization
+        $budget = Budget::find($request->budget_id);
+        $this->authorize('update', $budget);
+        $this->authorize('owns', $bill);
+
+        // Delete
+        $bill->delete();
+
+        // Response
+        $bills = auth()->user()->bills;
+
+        return response()->json([
+            'message' => 'Bill deleted successfully.',
+            'html' => [
+                '.card__bills' => view('bills.list', compact('budget', 'bills'))->render(),
+                '#modal .modal-footer, #modal .modal-body .form-row' => ''
+            ]
+        ]);
     }
     
 }
