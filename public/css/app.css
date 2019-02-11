@@ -10499,7 +10499,7 @@ a.text-dark:focus {
 /*	Listings */
 
 .card__accounts tbody tr:hover,
-.card__purchases tbody tr:hover,
+.card__transactions tbody tr:hover,
 .card__bills tbody tr:hover {
   cursor: pointer;
   background-color: rgba(0, 0, 0, 0.03);

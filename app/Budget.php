@@ -17,12 +17,12 @@ class Budget extends Model
     }
 
     /**
-     * Get purchases assigned to budget
+     * Get transactions assigned to budget
      * 
      */
-    public function purchases()
+    public function transactions()
     {
-        return $this->hasMany('App\Purchase');
+        return $this->hasMany('App\Transaction');
     }
 
     /**
@@ -31,7 +31,7 @@ class Budget extends Model
      */
     public function payments()
     {
-        return $this->purchases()->where('type', '=', 'bill');
+        return $this->transactions()->where('type', '=', 'bill');
     }
 
 }

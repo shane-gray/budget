@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Purchase;
+use App\Transaction;
 use App\Budget;
 use App\Account;
 use App\Bill;
 use Illuminate\Http\Request;
 
-class PurchaseController extends Controller
+class TransactionController extends Controller
 {
 
     /**
@@ -41,7 +41,7 @@ class PurchaseController extends Controller
 
             return response()->json([
                 'html' => [
-                    '#modal .modal-content' => view('purchases.create', compact('budget', 'accounts', 'bills'))->render()
+                    '#modal .modal-content' => view('transactions.create', compact('budget', 'accounts', 'bills'))->render()
                 ]
             ]);
 
@@ -86,13 +86,12 @@ class PurchaseController extends Controller
         }
         
         // Create
-        $purchase = Purchase::create($data);
+        $transaction = Transaction::create($data);
     
         $from_account = Account::find($data['from_account']);
 
         if( $data['type'] == 'deposit' )
             $from_account->add($data['amount']);
-
         else
             $from_account->subtract($data['amount']);
 
@@ -104,14 +103,14 @@ class PurchaseController extends Controller
         // Response
         $budget = Budget::find($data['budget_id']);
         $accounts = auth()->user()->accounts;
-        $purchases = $budget->purchases()->orderBy('created_at', 'desc')->get();
+        $transactions = $budget->transactions()->orderBy('created_at', 'desc')->get();
         $bills = auth()->user()->bills;
 
         return response()->json([
-            'message' => 'Purchase added successfully.',
+            'message' => 'Transaction added successfully.',
             'html' => [
                 '.card__accounts' => view('accounts.list', compact('accounts'))->render(),
-                '.card__purchases' => view('purchases.list', compact('budget', 'accounts', 'purchases'))->render(),
+                '.card__transactions' => view('transactions.list', compact('budget', 'accounts', 'transactions'))->render(),
                 '.card__bills' => view('bills.list', compact('budget', 'bills'))->render()
             ]
         ]);
@@ -120,13 +119,13 @@ class PurchaseController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Purchase  $purchase
+     * @param  \App\Transaction  $transaction
      * @return \Illuminate\Http\Response
      */
-    public function edit(Purchase $purchase)
+    public function edit(Transaction $transaction)
     {
         // Authorization
-        $budget = Budget::find($purchase->budget_id);
+        $budget = Budget::find($transaction->budget_id);
         $this->authorize('update', $budget);
 
         // Response
@@ -135,7 +134,7 @@ class PurchaseController extends Controller
 
         return response()->json([
             'html' => [
-                '#modal .modal-content' => view('purchases.edit', compact('budget', 'accounts', 'bills', 'purchase'))->render()
+                '#modal .modal-content' => view('transactions.edit', compact('budget', 'accounts', 'bills', 'transaction'))->render()
             ]
         ]);
 
@@ -145,10 +144,10 @@ class PurchaseController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Purchase  $purchase
+     * @param  \App\Transaction  $transaction
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Purchase $purchase)
+    public function update(Request $request, Transaction $transaction)
     {
         // Validation
         $data = $request->validate([
@@ -161,7 +160,7 @@ class PurchaseController extends Controller
         ]);
 
         // Authorization
-        $budget = Budget::find($purchase->budget_id);
+        $budget = Budget::find($transaction->budget_id);
         $this->authorize('update', $budget);
         $this->authorize('owns', Account::find($data['from_account']));
         
@@ -178,39 +177,43 @@ class PurchaseController extends Controller
         }
 
         // Revert old transaction
-        $from_account = Account::find($purchase->from_account);
+        $from_account = Account::find($transaction->from_account);
 
-        if( $purchase->type == 'deposit' )
-            $from_account->subtract($purchase->amount);
+        if( $transaction->type == 'deposit' )
+            $from_account->subtract($transaction->amount);
         else
-            $from_account->add($purchase->amount);
+            $from_account->add($transaction->amount);
 
-        if( $purchase->type == 'transfer' ) {
-            $to_account = Account::find($purchase->to_account);
-            $to_account->subtract($purchase->amount);
+        if( $transaction->type == 'transfer' ) {
+            $to_account = Account::find($transaction->to_account);
+            $to_account->subtract($transaction->amount);
         }
 
         // Update
         $from_account = Account::find($data['from_account']);
-        $from_account->subtract($data['amount']);
+
+        if( $data['type'] == 'deposit' )
+            $from_account->add($data['amount']);
+        else
+            $from_account->subtract($data['amount']);
 
         if( $data['type'] == 'transfer' ) {
             $to_account = Account::find($data['to_account']);
             $to_account->add($data['amount']);
         }
 
-        $purchase->update($data);
+        $transaction->update($data);
 
         // Response
         $accounts = auth()->user()->accounts;
-        $purchases = $budget->purchases()->orderBy('created_at', 'desc')->get();
+        $transactions = $budget->transactions()->orderBy('created_at', 'desc')->get();
         $bills = auth()->user()->bills;
 
         return response()->json([
-            'message' => 'Purchase updated successfully.',
+            'message' => 'Transaction updated successfully.',
             'html' => [
                 '.card__accounts' => view('accounts.list', compact('accounts'))->render(),
-                '.card__purchases' => view('purchases.list', compact('budget', 'accounts', 'purchases'))->render(),
+                '.card__transactions' => view('transactions.list', compact('budget', 'accounts', 'transactions'))->render(),
                 '.card__bills' => view('bills.list', compact('budget', 'bills'))->render()
             ]
         ]);
@@ -220,40 +223,40 @@ class PurchaseController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Purchase  $purchase
+     * @param  \App\Transaction  $transaction
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Purchase $purchase)
+    public function destroy(Transaction $transaction)
     {
         // Authorization
-        $budget = Budget::find($purchase->budget_id);
+        $budget = Budget::find($transaction->budget_id);
         $this->authorize('update', $budget);
 
         // Delete
-        $from_account = Account::find($purchase->from_account);
+        $from_account = Account::find($transaction->from_account);
 
-        if( $purchase->type == 'deposit' )
-            $from_account->subtract($purchase->amount);
+        if( $transaction->type == 'deposit' )
+            $from_account->subtract($transaction->amount);
         else
-            $from_account->add($purchase->amount);
+            $from_account->add($transaction->amount);
 
-        if( $purchase->type == 'transfer' ) {
-            $to_account = Account::find($purchase->to_account);
-            $to_account->subtract($purchase->amount);
+        if( $transaction->type == 'transfer' ) {
+            $to_account = Account::find($transaction->to_account);
+            $to_account->subtract($transaction->amount);
         }
 
-        $purchase->delete();
+        $transaction->delete();
 
         // Response
         $accounts = auth()->user()->accounts;
-        $purchases = $budget->purchases()->orderBy('created_at', 'desc')->get();
+        $transactions = $budget->transactions()->orderBy('created_at', 'desc')->get();
         $bills = auth()->user()->bills;
 
         return response()->json([
-            'message' => 'Purchase deleted successfully.',
+            'message' => 'Transaction deleted successfully.',
             'html' => [
                 '.card__accounts' => view('accounts.list', compact('accounts'))->render(),
-                '.card__purchases' => view('purchases.list', compact('budget', 'accounts', 'purchases'))->render(),
+                '.card__transactions' => view('transactions.list', compact('budget', 'accounts', 'transactions'))->render(),
                 '.card__bills' => view('bills.list', compact('budget', 'bills'))->render(),
                 '#modal .modal-footer, #modal .modal-body .form-row' => ''
             ]

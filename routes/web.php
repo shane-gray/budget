@@ -37,10 +37,10 @@ Route::resource('accounts', 'AccountController')->except([
 
 /*
 |--------------------------------------------------------------------------
-| Purchase Routes
+| Transaction Routes
 |--------------------------------------------------------------------------
 */
-Route::resource('purchases', 'PurchaseController')->except([
+Route::resource('transactions', 'TransactionController')->except([
     'show', 'index'
 ]);
 

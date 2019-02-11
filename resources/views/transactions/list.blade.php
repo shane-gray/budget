@@ -1,10 +1,10 @@
-<div class="card card__purchases mb-4">
+<div class="card card__transactions mb-4">
 
-    <div class="card-header">Purchases</div>
+    <div class="card-header">Transactions</div>
 
     <div class="card-body">
 
-        @if( $purchases->isNotEmpty() )
+        @if( $transactions->isNotEmpty() )
 
             <table class="table">
 
@@ -18,13 +18,13 @@
 
                 <tbody>
                     
-                    @foreach( $purchases as $purchase )
+                    @foreach( $transactions as $transaction )
 
-                        <tr data-id="{{ $purchase->id }}" data-href="/purchases/{{ $purchase->id }}/edit" data-toggle="modal" data-target="#modal">
+                        <tr data-id="{{ $transaction->id }}" data-href="/transactions/{{ $transaction->id }}/edit" data-toggle="modal" data-target="#modal">
 
-                            <td>{{ $purchase->name }}</td>
+                            <td>{{ $transaction->name }}</td>
 
-                            <td>${{ $purchase->amount }}</td>
+                            <td>${{ $transaction->amount }}</td>
 
                         </tr>
 
@@ -36,18 +36,18 @@
 
         @else
 
-            <p>You have no purchases</p>
+            <p>You have no transactions</p>
 
         @endif
 
         <a
-            href="/purchases/create"
+            href="/transactions/create"
             class="btn btn-primary float-right"
             data-toggle="modal"
             data-target="#modal"
             data-budget_id="{{ $budget->id }}"
             {{ $accounts->isEmpty() ? 'disabled' : '' }}>
-            <span class="oi oi-plus"></span> New purchase
+            <span class="oi oi-plus"></span> New transaction
         </a>
 
     </div>

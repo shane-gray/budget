@@ -1,12 +1,12 @@
 <div class="modal-content">
     <div class="modal-header">
-        <h5 class="modal-title">New purchase</h5>
+        <h5 class="modal-title">New transaction</h5>
         <button type="button" class="close" data-dismiss="modal">
             <span>&times;</span>
         </button>
     </div>
     <div class="modal-body">
-        <form action="/purchases" method="post">
+        <form action="/transactions" method="post">
             @csrf
             <input type="hidden" name="budget_id" value="{{ $budget->id }}" />
             <div class="form-row">
@@ -66,6 +66,6 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-primary js-submit">Save purchase</button>
+        <button type="button" class="btn btn-primary js-submit">Save transaction</button>
     </div>
 </div>

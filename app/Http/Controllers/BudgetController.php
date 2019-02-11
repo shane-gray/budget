@@ -54,11 +54,11 @@ class BudgetController extends Controller
         $this->authorize('update', $budget);
         
         $accounts = Auth::user()->accounts;
-        $purchases = $budget->purchases()->orderBy('created_at', 'desc')->get();
+        $transactions = $budget->transactions()->orderBy('created_at', 'desc')->get();
         $payments = $budget->payments;
         $bills = Auth::user()->bills;
 
-        return view('budgets.show', compact('budget', 'accounts', 'purchases', 'bills'));
+        return view('budgets.show', compact('budget', 'accounts', 'transactions', 'bills'));
     }
 
     /**

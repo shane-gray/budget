@@ -15,12 +15,12 @@ class Account extends Model
     protected $guarded = [];
     
     /**
-     * Get the purchases tied to this account
+     * Get the transactions tied to this account
      * 
      */
-    public function purchases()
+    public function transactions()
     {
-        return $this->hasMany('App\Purchase', 'from_account');
+        return $this->hasMany('App\Transaction', 'from_account');
     }
 
     /**

@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Purchase extends Model
+class Transaction extends Model
 {
 
     /**
@@ -15,7 +15,7 @@ class Purchase extends Model
     protected $guarded = [];
     
     /**
-     * Get the budget this purchase is assigned
+     * Get the budget this transaction is assigned
      * to.
      * 
      */
@@ -25,7 +25,7 @@ class Purchase extends Model
     }
 
     /**
-     * Get the account this purchase is assigned
+     * Get the account this transaction is assigned
      * to.
      * 
      */

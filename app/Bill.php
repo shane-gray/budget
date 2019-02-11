@@ -3,7 +3,7 @@
 namespace App;
 
 use App\Budget;
-use App\Purchases;
+use App\Transactions;
 use Illuminate\Database\Eloquent\Model;
 
 class Bill extends Model
@@ -31,9 +31,9 @@ class Bill extends Model
      */
     public function amount(Bill $bill, Budget $budget)
     {
-        $payments = Purchase::where(['bill_id' => $bill->id, 'budget_id' => $budget->id])->get();
-        $amount = $payments->reduce(function($carry, $purchase) {
-            return $carry + $purchase->amount;
+        $payments = Transaction::where(['bill_id' => $bill->id, 'budget_id' => $budget->id])->get();
+        $amount = $payments->reduce(function($carry, $transaction) {
+            return $carry + $transaction->amount;
         });
 
         return number_format( (float) $amount, 2 );

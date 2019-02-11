@@ -29,7 +29,7 @@
                 </div>
             @endif
 
-            @include('purchases.list')
+            @include('transactions.list')
 
         </div>
 
