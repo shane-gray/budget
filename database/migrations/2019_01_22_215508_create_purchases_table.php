@@ -17,7 +17,7 @@ class CreatePurchasesTable extends Migration
             $table->increments('id');
             $table->integer('budget_id');
             $table->integer('bill_id')->nullable();
-            $table->enum('type', ['purchase', 'transfer', 'bill']);
+            $table->enum('type', ['purchase', 'deposit', 'transfer', 'bill']);
             $table->string('name');
             $table->decimal('amount', 8, 2);
             $table->integer('from_account');

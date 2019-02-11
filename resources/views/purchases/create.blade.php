@@ -16,6 +16,7 @@
                         <select id="type" name="type" class="form-control" required>
                             <option value="purchase">Purchase</option>
                             <option value="bill">Bill</option>
+                            <option value="deposit">Deposit</option>
                             <option value="transfer">Transfer</option>
                         </select>
                     </div>

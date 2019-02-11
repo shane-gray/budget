@@ -17,6 +17,7 @@
                         <select id="type" name="type" class="form-control" required>
                             <option value="purchase" {{ $purchase->type == 'purchase' ? 'selected="selected"' : '' }}>Purchase</option>
                             <option value="bill" {{ $purchase->type == 'bill' ? 'selected="selected"' : '' }}>Bill</option>
+                            <option value="deposit" {{ $purchase->type == 'deposit' ? 'selected="selected"' : '' }}>Deposit</option>
                             <option value="transfer" {{ $purchase->type == 'transfer' ? 'selected="selected"' : '' }}>Transfer</option>
                         </select>
                     </div>

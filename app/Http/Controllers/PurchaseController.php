@@ -87,9 +87,14 @@ class PurchaseController extends Controller
         
         // Create
         $purchase = Purchase::create($data);
-
+    
         $from_account = Account::find($data['from_account']);
-        $from_account->subtract($data['amount']);
+
+        if( $data['type'] == 'deposit' )
+            $from_account->add($data['amount']);
+
+        else
+            $from_account->subtract($data['amount']);
 
         if( $data['type'] == 'transfer' ) {
             $to_account = Account::find($data['to_account']);
@@ -174,7 +179,11 @@ class PurchaseController extends Controller
 
         // Revert old transaction
         $from_account = Account::find($purchase->from_account);
-        $from_account->add($purchase->amount);
+
+        if( $purchase->type == 'deposit' )
+            $from_account->subtract($purchase->amount);
+        else
+            $from_account->add($purchase->amount);
 
         if( $purchase->type == 'transfer' ) {
             $to_account = Account::find($purchase->to_account);
@@ -222,7 +231,11 @@ class PurchaseController extends Controller
 
         // Delete
         $from_account = Account::find($purchase->from_account);
-        $from_account->add($purchase->amount);
+
+        if( $purchase->type == 'deposit' )
+            $from_account->subtract($purchase->amount);
+        else
+            $from_account->add($purchase->amount);
 
         if( $purchase->type == 'transfer' ) {
             $to_account = Account::find($purchase->to_account);
