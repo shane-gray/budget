@@ -43,7 +43,6 @@ class LoginController extends Controller
         if( $budget ) {
             return '/budgets/' . $budget->id;
         } else {
-            dd($budget);
             return '/';
         }
     }
@@ -59,7 +58,6 @@ class LoginController extends Controller
         if( $budget ) {
             return redirect('/budgets/' . $budget->id);
         } else {
-            dd($budget);
             return redirect('/');
         }
     }
