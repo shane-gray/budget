@@ -10505,12 +10505,3 @@ a.text-dark:focus {
   background-color: rgba(0, 0, 0, 0.03);
 }
 
-/*  Single budget page */
-
-.single-budget .list__accounts {
-  align-self: start;
-  position: -webkit-sticky;
-  position: sticky;
-  top: 20px;
-}
-

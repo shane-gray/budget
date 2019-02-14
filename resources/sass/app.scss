@@ -17,10 +17,3 @@
 	.card__accounts tbody tr:hover,
 	.card__transactions tbody tr:hover,
 	.card__bills tbody tr:hover {cursor: pointer; background-color: rgba(0, 0, 0, 0.03);}
-
-/*  Single budget page */
-	.single-budget {
-
-		.list__accounts {align-self: start; position: sticky; top: 20px;}
-
-	}
