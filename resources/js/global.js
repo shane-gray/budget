@@ -158,7 +158,7 @@ $('#modal').on('change', '[name="amount"], [name="balance"]',  function() {
  * Collapse cards
  * 
  */
-$('.card .card-header').on('click', function() {
+$(document).on('click', '.card .card-header', function() {
 
     $(this).siblings('.card-body').slideToggle();
 
