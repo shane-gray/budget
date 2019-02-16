@@ -10498,6 +10498,10 @@ a.text-dark:focus {
 
 /*	Listings */
 
+.card-header {
+  cursor: pointer;
+}
+
 .card__accounts tbody tr:hover,
 .card__transactions tbody tr:hover,
 .card__bills tbody tr:hover {

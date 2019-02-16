@@ -147,3 +147,19 @@ function ajax_error($modal, $form, error) {
 $('#modal').on('change', '[name="amount"], [name="balance"]',  function() {
     $(this).val( parseFloat( $(this).val() ).toFixed( 2 ) );
 });
+
+/*
+|-------------------------------------------------
+| Cards
+|-------------------------------------------------
+*/
+
+/**
+ * Collapse cards
+ * 
+ */
+$('.card .card-header').on('click', function() {
+
+    $(this).siblings('.card-body').slideToggle();
+
+});
