@@ -34,4 +34,18 @@ class Budget extends Model
         return $this->transactions()->where('type', '=', 'bill');
     }
 
+    /**
+     * Get total bill payments amount on budget
+     * 
+     */
+    public function payments_total()
+    {
+        $bills = auth()->user()->bills;
+        
+        return $bills->reduce(function($carry, $bill) {
+            $carry += $bill->amount($bill, $this);
+            return $carry;
+        }, 0);
+    }
+
 }

@@ -36,7 +36,7 @@ class Bill extends Model
             return $carry + $transaction->amount;
         });
 
-        return number_format( (float) $amount, 2 );
+        return number_format( (float) $amount, 2, '.', '' );
     }
 
 }

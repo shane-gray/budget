@@ -1,6 +1,6 @@
 <div class="card card__bills mb-4">
 
-    <div class="card-header">Bills</div>
+    <div class="card-header">Bills <span class="float-right">${{ $budget->payments_total() }}</div>
 
     <div class="card-body">
 
